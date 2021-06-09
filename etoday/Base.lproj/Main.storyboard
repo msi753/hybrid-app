@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="etoday" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yic-Gd-0fE">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LDw-DS-xuF">
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem tag="10" systemItem="reply" id="vd6-x7-Vzt">
+                                        <connections>
+                                            <action selector="touchBack:" destination="BYZ-38-t0r" id="sKn-cQ-ESN"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3q0-9K-QZy"/>
+                                    <barButtonItem tag="20" title="forward" image="arrowshape.turn.up.forward" catalog="system" id="cUe-Kv-aqA">
+                                        <connections>
+                                            <action selector="touchForward:" destination="BYZ-38-t0r" id="GLC-Mx-V9Z"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="0VY-9g-aJy"/>
+                                    <barButtonItem tag="30" title="home" image="house" catalog="system" id="PZ9-BB-h86">
+                                        <connections>
+                                            <action selector="touchHome:" destination="BYZ-38-t0r" id="IBF-rf-I5D"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="2go-tv-T9G"/>
+                                    <barButtonItem tag="40" systemItem="refresh" id="z9s-4A-fAe">
+                                        <connections>
+                                            <action selector="touchRefresh:" destination="BYZ-38-t0r" id="HnQ-gF-Q3L"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3z5-GE-g34"/>
+                                    <barButtonItem tag="50" title="Item" image="tortoise" catalog="system" id="gFC-rc-WCr">
+                                        <connections>
+                                            <action selector="touchStop:" destination="BYZ-38-t0r" id="dcj-6n-oUK"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="yic-Gd-0fE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="R1g-Qo-25B"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="yic-Gd-0fE" secondAttribute="bottom" id="fZj-p0-OgN"/>
+                            <constraint firstItem="yic-Gd-0fE" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vJt-Y2-ETy"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="yic-Gd-0fE" secondAttribute="trailing" id="wj4-7x-161"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="yic-Gd-0fE" id="GaM-qT-zkd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="30" y="84"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="arrowshape.turn.up.forward" catalog="system" width="128" height="106"/>
+        <image name="house" catalog="system" width="128" height="106"/>
+        <image name="tortoise" catalog="system" width="128" height="68"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
