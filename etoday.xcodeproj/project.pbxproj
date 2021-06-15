@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		B948148C266DE88900852A13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B948148A266DE88900852A13 /* Main.storyboard */; };
 		B948148E266DE88B00852A13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B948148D266DE88B00852A13 /* Assets.xcassets */; };
 		B9481491266DE88B00852A13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B948148F266DE88B00852A13 /* LaunchScreen.storyboard */; };
+		B95B5B9B2671CEE50086472F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95B5B9A2671CEE50086472F /* NetworkManager.swift */; };
+		B95B5B9D2671D9A00086472F /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B95B5B9C2671D9A00086472F /* OfflineViewController.swift */; };
 		B9E934D4266EFF93000847F9 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9E934D3266EFF93000847F9 /* WebKit.framework */; };
 		F2CE26E06240F0D539C24153 /* Pods_etoday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BADCD9183A393BCDA6A899CB /* Pods_etoday.framework */; };
 /* End PBXBuildFile section */
@@ -28,6 +30,8 @@
 		B948148D266DE88B00852A13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B9481490266DE88B00852A13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9481492266DE88B00852A13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B95B5B9A2671CEE50086472F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		B95B5B9C2671D9A00086472F /* OfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
 		B9E934D3266EFF93000847F9 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		BADCD9183A393BCDA6A899CB /* Pods_etoday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_etoday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -51,7 +55,6 @@
 				B3F52910F0FA416F1B51EA9D /* Pods-etoday.debug.xcconfig */,
 				107BF31D64631BC270D3330F /* Pods-etoday.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -79,7 +82,9 @@
 				B9481484266DE88900852A13 /* AppDelegate.swift */,
 				B9481486266DE88900852A13 /* SceneDelegate.swift */,
 				B9481488266DE88900852A13 /* ViewController.swift */,
+				B95B5B9A2671CEE50086472F /* NetworkManager.swift */,
 				B948148A266DE88900852A13 /* Main.storyboard */,
+				B95B5B9C2671D9A00086472F /* OfflineViewController.swift */,
 				B948148D266DE88B00852A13 /* Assets.xcassets */,
 				B948148F266DE88B00852A13 /* LaunchScreen.storyboard */,
 				B9481492266DE88B00852A13 /* Info.plist */,
@@ -210,9 +215,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B95B5B9B2671CEE50086472F /* NetworkManager.swift in Sources */,
 				B9481489266DE88900852A13 /* ViewController.swift in Sources */,
 				B9481485266DE88900852A13 /* AppDelegate.swift in Sources */,
 				B9481487266DE88900852A13 /* SceneDelegate.swift in Sources */,
+				B95B5B9D2671D9A00086472F /* OfflineViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
