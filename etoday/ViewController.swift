@@ -9,6 +9,7 @@
 import UIKit
 import WebKit
 import Reachability
+import SafariServices
 
 class ViewController: UIViewController {
 
@@ -44,6 +45,8 @@ class ViewController: UIViewController {
 //        NetworkManager.isReachable { _ in
 //            self.showMainPage()
 //        }
+        
+        webView.configuration.userContentController.add(self, name: "showSnsShare_IOS()")
         
         //initWebViewThenCallFromJs()
         loadUrl(urlString)
@@ -144,11 +147,13 @@ extension ViewController: WKNavigationDelegate {
         print("중복 리로드 방지")
     }
     
+    
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         print("스피너 돌기 시작")
         self.spinner.startAnimating()
     }
     
+    //웹뷰 로드 끝
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("didFinish")
         self.spinner.stopAnimating()
@@ -160,14 +165,21 @@ extension ViewController: WKNavigationDelegate {
         print(" didFail 상세 페이지를 읽어오지 못했습니다")
     }
     
-
+    //href="_blank" 처리
+    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
+        if navigationAction.targetFrame == nil {
+            webView.load(navigationAction.request)
+        }
+        return nil
+        
+    }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
         print("리다이렉트")
         print("serverRedirect")
     }
     
-    
+    //여기가 스피너 돌려야하는 곳 아니여? 아니야^^
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         
         print("start")
@@ -184,8 +196,6 @@ extension ViewController: WKNavigationDelegate {
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        print("decidePolicyFor navigationAction")
-        print(navigationAction.request.url)
 //        for page in webView.backForwardList.backList {
 //            print("User visited \(page.url.absoluteString)")
 //        }
@@ -204,6 +214,17 @@ extension ViewController: WKNavigationDelegate {
         
         //host가 m7.2021.dev.etoday.loc을 포함할 때만 이동한다
         let urlAbsoluteString = url.absoluteString
+        
+        // SFSafariViewController 외부로 이동하기
+        if urlAbsoluteString.contains("https://talk.etoday.co.kr/") {
+            guard let sfUrl = URL(string: urlAbsoluteString) else {
+                decisionHandler(.cancel)
+                return
+            }
+            let safariViewController = SFSafariViewController(url: sfUrl)
+            present(safariViewController, animated: true, completion: nil)
+        }
+        
         //처음에 param이 없을 때만 이동을 허용한다
         if !urlAbsoluteString.contains("utm_device=IOS") {
             //print(1)
@@ -215,7 +236,6 @@ extension ViewController: WKNavigationDelegate {
                 } else {
                     urlString += "&" + defaultParam
                 }
-                print(urlString)
                 self.loadUrl(urlAbsoluteString + urlString)
                 //decisionHandler(.allow)
                 //return
@@ -225,4 +245,12 @@ extension ViewController: WKNavigationDelegate {
         //print(3)
         decisionHandler(.allow)
     }
+}
+
+extension ViewController: WKScriptMessageHandler {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        print(message)
+    }
+    
+    
 }
