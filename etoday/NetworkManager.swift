@@ -71,7 +71,6 @@ class NetworkManager: NSObject {
 
     // Network is unreachable
     static func isUnreachable(completed: @escaping (NetworkManager) -> Void) {
-        print("네트워크매니저의 isUnreachable 메소드 호출")
         if (NetworkManager.sharedInstance.reachability).connection == .unavailable {
             completed(NetworkManager.sharedInstance)
         }
