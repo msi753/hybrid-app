@@ -44,12 +44,17 @@ class NetworkManager: NSObject {
 
     @objc func networkStatusChanged(_ notification: Notification) {
         // Do something globally here!
-//        NetworkManager.isReachable { networkManagerInstance in
-//            print("Network is available")
-//        }
-//        NetworkManager.isUnreachable { networkManagerInstance in
-//            print("Network is Unavailable")
-//        }
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        NetworkManager.isReachable { networkManagerInstance in
+            appDelegate.isConnected = true
+            print("Network is available")
+        }
+        NetworkManager.isUnreachable { networkManagerInstance in
+            appDelegate.isConnected = false
+            print("Network is Unavailable")
+        }
+        
         //NetworkManager.sharedInstance.reachability.whenReachable
     }
 
