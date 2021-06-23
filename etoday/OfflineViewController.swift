@@ -7,28 +7,25 @@
 
 import UIKit
 
-//여기서 툴바 안보이게 해야할 거 같은데???
-//네트워크 연결안되면 어떻게 하는건데???
-//뒤로 돌아갈 곳이 어딘데!!!
-
 class OfflineViewController: UIViewController {
-
-    let network = NetworkManager.sharedInstance
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // If the network is reachable show the view controller
-        network.reachability.whenReachable = { _ in
-            self.showViewController()
-        }
+    @IBAction func retryButton(_ sender: Any) {
+        showViewController()
     }
     
     private func showViewController() -> Void {
-        
         func goToVC(_ segue: UIStoryboardSegue) {
             performSegue(withIdentifier: "unwindId", sender: self)
         }
-        
     }
+    
+    // MARK: - 툴바 숨기기
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isToolbarHidden = true
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.isToolbarHidden = false
+    }
+    
+
 }

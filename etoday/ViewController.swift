@@ -16,8 +16,10 @@ class ViewController: UIViewController {
     let network: NetworkManager = NetworkManager.sharedInstance
     
     var urlString: String = "http://m7.2021.dev.etoday.loc"
-    
+    //var urlString: String = "https://m.etoday.co.kr"
     let defaultParam: String = "utm_device=IOS"
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     @IBOutlet var webView: WKWebView!
     
@@ -29,8 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     override func loadView() {
-        print("loadView")
-        
+        //자바스크립트에서 값 가져오기
         let contentController = WKUserContentController()
         contentController.add(self, name: "Test")
         
@@ -41,10 +42,6 @@ class ViewController: UIViewController {
         view = webView
         
         webView.navigationDelegate = self
-        
-        NetworkManager.isUnreachable { _ in
-            self.showOfflinePage()
-        }
     }
     
     override func viewDidLoad() {
@@ -58,6 +55,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: - 네트워크
     private func showOfflinePage() -> Void {
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "NetworkUnavailable", sender: self)
@@ -65,7 +63,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func unwindToVC(_ segue: UIStoryboardSegue) {
-           
+        // 연결되어있지 않으면 다시 오류 화면 보여주기
+        if !appDelegate.isConnected {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "NetworkUnavailable", sender: self)
+            }
+        }
     }
     
     // MARK: - 툴바
@@ -82,22 +85,32 @@ class ViewController: UIViewController {
     }
     
     @IBAction func touchHome(_ sender: Any) {
-        //
+        let url = URL(string: "\(urlString)/?\(defaultParam)")
+        if let myUrl = url {
+            let req = URLRequest(url: myUrl)
+            webView.load(req)
+        }
     }
+    
     
     @IBAction func touchRefresh(_ sender: Any) {
         self.webView.reload()
-    }
-    
-    @IBAction func touchStop(_ sender: Any) {
     }
 }
 
 // MARK: - WKNavigationDelegate
 
 extension ViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        showOfflinePage()
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        backButton.isEnabled = webView.canGoBack
+        forwardButton.isEnabled = webView.canGoForward
+    }
+    
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        
         guard let url = navigationAction.request.url else {
             decisionHandler(.cancel)
             return
@@ -123,7 +136,8 @@ extension ViewController: WKNavigationDelegate {
         
         //처음에 param이 없을 때만 이동을 허용한다
         if !urlAbsoluteString.contains("utm_device=IOS") {
-            if host.contains("dev.etoday.loc") {
+            if host.contains("dev.etoday.loc") {    // log.etoday.co.kr도 있어서 m.etoday.co.kr만 통과시켜야한다
+            //if host.contains("m.etoday.co.kr") {
                 var urlString: String = ""
                 if !urlAbsoluteString.contains("?") {
                     urlString += "?" + defaultParam

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="3ih-S9-8ZZ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -40,19 +41,19 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Back" id="Pdu-In-c5J">
+                        <barButtonItem title="←" id="Pdu-In-c5J">
                             <connections>
                                 <action selector="touchBack:" destination="BYZ-38-t0r" id="6wf-Sz-xeB"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="ts2-OP-BPL"/>
-                        <barButtonItem title="Forwrd" id="qYR-Nw-wEc">
+                        <barButtonItem title="→" id="qYR-Nw-wEc">
                             <connections>
                                 <action selector="touchForward:" destination="BYZ-38-t0r" id="G0r-TT-jXf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="wwx-L8-ndJ"/>
-                        <barButtonItem image="house" catalog="system" id="KV9-Ut-bLf">
+                        <barButtonItem title="🏠" id="KV9-Ut-bLf">
                             <connections>
                                 <action selector="touchHome:" destination="BYZ-38-t0r" id="yjJ-lZ-SKk"/>
                             </connections>
@@ -88,9 +89,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="네트워크 연결 안됨" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JRQ-hl-la3">
-                                <rect key="frame" x="144" y="182" width="127" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pnx-jX-Wqb">
+                                <rect key="frame" x="179" y="478.5" width="56" height="30"/>
+                                <state key="normal" title="다시 시도"/>
+                                <connections>
+                                    <action selector="retryButton:" destination="y7r-FT-fkz" eventType="touchUpInside" id="rFr-WB-k5Z"/>
+                                    <segue destination="x41-62-GRo" kind="unwind" unwindAction="unwindToVC:" id="fY2-nf-QZH"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3uk-QL-Rhv">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                <color key="backgroundColor" red="0.1294117719" green="0.2235293984" blue="0.49803921579999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="3zd-44-Gps"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="잠시 후 다시 시도해 주세요." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="amP-0w-ixZ">
+                                <rect key="frame" x="20" y="437.5" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="네트워크 연결 상태가 좋지 않습니다." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GC3-1b-t8E">
+                                <rect key="frame" x="20" y="406.5" width="374" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -98,11 +119,21 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WJj-I4-J4t"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WJj-I4-J4t" firstAttribute="trailing" secondItem="GC3-1b-t8E" secondAttribute="trailing" constant="20" id="1fd-Kz-8OA"/>
+                            <constraint firstItem="GC3-1b-t8E" firstAttribute="leading" secondItem="WJj-I4-J4t" secondAttribute="leading" constant="20" id="2Qd-eP-wpM"/>
+                            <constraint firstItem="Pnx-jX-Wqb" firstAttribute="top" secondItem="amP-0w-ixZ" secondAttribute="bottom" constant="20" id="5In-wG-ekW"/>
+                            <constraint firstItem="3uk-QL-Rhv" firstAttribute="leading" secondItem="WJj-I4-J4t" secondAttribute="leading" id="942-Ag-63d"/>
+                            <constraint firstItem="3uk-QL-Rhv" firstAttribute="top" secondItem="xTT-We-N38" secondAttribute="top" id="MNg-PZ-3zz"/>
+                            <constraint firstItem="amP-0w-ixZ" firstAttribute="top" secondItem="GC3-1b-t8E" secondAttribute="bottom" constant="10" id="Mqs-dz-aEL"/>
+                            <constraint firstItem="amP-0w-ixZ" firstAttribute="centerY" secondItem="xTT-We-N38" secondAttribute="centerY" id="RZk-XU-Ql3"/>
+                            <constraint firstItem="amP-0w-ixZ" firstAttribute="leading" secondItem="WJj-I4-J4t" secondAttribute="leading" constant="20" id="byy-3L-dXV"/>
+                            <constraint firstItem="3uk-QL-Rhv" firstAttribute="trailing" secondItem="WJj-I4-J4t" secondAttribute="trailing" id="vn3-EZ-8A5"/>
+                            <constraint firstItem="amP-0w-ixZ" firstAttribute="centerX" secondItem="xTT-We-N38" secondAttribute="centerX" id="vqW-HT-Myw"/>
+                            <constraint firstItem="Pnx-jX-Wqb" firstAttribute="centerX" secondItem="xTT-We-N38" secondAttribute="centerX" id="wMV-Lu-Ltp"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fa1-tY-ifW"/>
-                    <connections>
-                        <segue destination="x41-62-GRo" kind="unwind" identifier="unwindId" unwindAction="unwindToVC:" id="bbX-vd-mTy"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jjh-Pg-gcE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="x41-62-GRo" userLabel="Exit" sceneMemberID="exit"/>
@@ -132,7 +163,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="house" catalog="system" width="128" height="106"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
