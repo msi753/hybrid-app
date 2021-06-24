@@ -15,8 +15,9 @@ class ViewController: UIViewController {
 
     let network: NetworkManager = NetworkManager.sharedInstance
     
-    var urlString: String = "http://m7.2021.dev.etoday.loc"
-    //var urlString: String = "https://m.etoday.co.kr"
+    //var urlString: String = "http://m7.2021.dev.etoday.loc"
+    var urlString: String = "https://m.etoday.co.kr"
+
     let defaultParam: String = "utm_device=IOS"
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -102,10 +103,11 @@ class ViewController: UIViewController {
 
 extension ViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print(error.localizedDescription)
         showOfflinePage()
     }
     
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
         backButton.isEnabled = webView.canGoBack
         forwardButton.isEnabled = webView.canGoForward
     }
@@ -125,7 +127,20 @@ extension ViewController: WKNavigationDelegate {
         let urlAbsoluteString = url.absoluteString
         
         // SFSafariViewController 외부로 이동하기
-        if urlAbsoluteString.contains("https://talk.etoday.co.kr/") {
+        if urlAbsoluteString.contains("talk.etoday.co.kr/") ||
+            urlAbsoluteString.contains("/channel5/") ||
+            urlAbsoluteString.contains("fortune.etoday.co.kr/") ||
+            urlAbsoluteString.contains("bravo.etoday.co.kr/") ||
+            urlAbsoluteString.contains("biospectator.com") ||
+            urlAbsoluteString.contains("enter.etoday.co.kr") ||
+            urlAbsoluteString.contains("event.etoday.co.kr") ||
+            urlAbsoluteString.contains("company.etoday.co.kr/userguide/notice") ||
+            urlAbsoluteString.contains("www.youtube.com/user/etodaycokr") ||
+            urlAbsoluteString.contains("www.facebook.com/etoday/") ||
+            urlAbsoluteString.contains("post.naver.com/my.nhn?memberNo=6132524") ||
+            urlAbsoluteString.contains("blog.naver.com/etoday12") ||
+            urlAbsoluteString.contains("twitter.com/etodaynews") ||
+            urlAbsoluteString.contains("content.v.daum.net/3558/home") {
             guard let sfUrl = URL(string: urlAbsoluteString) else {
                 decisionHandler(.cancel)
                 return
@@ -136,8 +151,12 @@ extension ViewController: WKNavigationDelegate {
         
         //처음에 param이 없을 때만 이동을 허용한다
         if !urlAbsoluteString.contains("utm_device=IOS") {
-            if host.contains("dev.etoday.loc") {    // log.etoday.co.kr도 있어서 m.etoday.co.kr만 통과시켜야한다
-            //if host.contains("m.etoday.co.kr") {
+            if urlAbsoluteString == "https://m.etoday.co.kr/channel5/" {
+                decisionHandler(.cancel)
+                return
+            }
+            //if host.contains("dev.etoday.loc") {    // log.etoday.co.kr도 있어서 m.etoday.co.kr만 통과시켜야한다
+            if host.contains("m.etoday.co.kr") {
                 var urlString: String = ""
                 if !urlAbsoluteString.contains("?") {
                     urlString += "?" + defaultParam
@@ -148,14 +167,17 @@ extension ViewController: WKNavigationDelegate {
                 let url = URL(string: urlAbsoluteString+urlString)
                 if let myUrl = url {
                     let req = URLRequest(url: myUrl)
-                    print(req)
                     webView.load(req)
                 }
                 
+            } else {
+                decisionHandler(.cancel)
+                return
             }
         }
         
         decisionHandler(.allow)
+        
     }
 }
 
